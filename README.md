@@ -1,2 +1,2 @@
-# Claude-AI-by-Zuhriddin
-# This Claude AI works by its official API and it is legal!
+# Zakovat-AI-by-Zuhriddin
+# Since 2025-year
