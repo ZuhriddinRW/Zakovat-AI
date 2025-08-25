@@ -3,453 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claude Sonnet 4 Chat</title>
+    <title>Zakovat AI 1.0 Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.puter.com/v2/"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1e1e2e 0%, #2d3748 100%);
-            min-height: 100vh;
-            color: #e2e8f0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            color: #94a3b8;
-            font-size: 1.1rem;
-        }
-
-        .chat-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            min-height: 400px;
-            max-height: 60vh;
-        }
-
-        .message {
-            margin-bottom: 20px;
-            animation: fadeInUp 0.3s ease-out;
-        }
-
-        .message.user {
-            text-align: right;
-        }
-
-        .message-content {
-            display: inline-block;
-            max-width: 80%;
-            padding: 15px 20px;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .message.user .message-content {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: white;
-        }
-
-        .message.assistant .message-content {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: left;
-            white-space: pre-wrap;
-        }
-
-        .message-image {
-            max-width: 300px;
-            max-height: 300px;
-            border-radius: 12px;
-            margin: 10px 0;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .message-image:hover {
-            transform: scale(1.02);
-        }
-
-        .message-file {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 10px;
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .file-icon {
-            width: 24px;
-            height: 24px;
-            background: #3b82f6;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .file-info {
-            flex: 1;
-        }
-
-        .file-name {
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-
-        .file-size {
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-
-        .input-area {
-            padding: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .attachments-preview {
-            margin-bottom: 15px;
-            display: none;
-        }
-
-        .attachment-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 8px 12px;
-            margin: 0 5px 5px 0;
-            font-size: 0.85rem;
-        }
-
-        .attachment-remove {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 16px;
-            padding: 0;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.2s ease;
-        }
-
-        .attachment-remove:hover {
-            background: rgba(239, 68, 68, 0.2);
-        }
-
-        .input-container {
-            display: flex;
-            gap: 15px;
-            align-items: flex-end;
-        }
-
-        #prompt {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            color: #e2e8f0;
-            font-family: inherit;
-            font-size: 0.95rem;
-            resize: vertical;
-            min-height: 50px;
-            max-height: 120px;
-            transition: all 0.3s ease;
-        }
-
-        #prompt:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        #prompt::placeholder {
-            color: #64748b;
-        }
-
-        .input-controls {
-            display: flex;
-            gap: 10px;
-            align-items: flex-end;
-        }
-
-        .attach-button {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 12px;
-            color: #e2e8f0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            height: 50px;
-            width: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .attach-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .send-button {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            border: none;
-            border-radius: 12px;
-            padding: 15px 25px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 100px;
-            height: 50px;
-        }
-
-        .send-button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-        }
-
-        .send-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .typing-indicator {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            color: #94a3b8;
-            font-style: italic;
-            margin-bottom: 15px;
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 4px;
-        }
-
-        .typing-dots span {
-            width: 6px;
-            height: 6px;
-            background: #94a3b8;
-            border-radius: 50%;
-            animation: pulse 1.4s ease-in-out infinite both;
-        }
-
-        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
-
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #fca5a5;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-
-        .paste-hint {
-            font-size: 0.8rem;
-            color: #64748b;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .drag-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(59, 130, 246, 0.2);
-            z-index: 1000;
-            border: 4px dashed #3b82f6;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #3b82f6;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'fade-in-up': 'fade-in-up 0.5s ease-out',
+                        'scale-in': 'scale-in 0.3s ease-out',
+                        'typing-dots': 'typing-dots 1.4s ease-in-out infinite both',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'gradient-x': {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                        },
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'scale-in': {
+                            '0%': { opacity: '0', transform: 'scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        'typing-dots': {
+                            '0%, 80%, 100%': { transform: 'scale(0)', opacity: '0.5' },
+                            '40%': { transform: 'scale(1)', opacity: '1' },
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'mesh-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)',
+                    }
+                }
             }
         }
-
-        @keyframes pulse {
-            0%, 80%, 100% {
-                transform: scale(0);
-            }
-            40% {
-                transform: scale(1);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .message-content {
-                max-width: 95%;
-            }
-            
-            .input-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .input-controls {
-                width: 100%;
-                justify-content: stretch;
-            }
-            
-            .send-button {
-                flex: 1;
-            }
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <div class="drag-overlay" id="dragOverlay">
-        Drop files here to upload
+<body class="h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/30 to-pink-900/20 animate-gradient-x bg-[length:400%_400%]"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute top-3/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float" style="animation-delay: -3s;"></div>
+        <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
     </div>
 
-    <div class="container">
-        <div class="header">
-            <h1>Claude Sonnet 4</h1>
-            <p>Powered by Puter.js • Ask anything, send files and images</p>
-        </div>
-
-        <div class="chat-container">
-            <div class="messages" id="messages">
-                <div class="message assistant">
-                    <div class="message-content">
-                        Hello! I'm Claude Sonnet 4. I can help you with text, analyze images, and work with files. You can:
-                        <br>• Type your questions
-                        <br>• Upload files with the 📎 button
-                        <br>• Paste images with Ctrl+V
-                        <br>• Drag and drop files
-                        <br><br>How can I help you today?
-                    </div>
-                </div>
-            </div>
-
-            <div class="typing-indicator" id="typingIndicator">
-                Claude is thinking
-                <div class="typing-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-
-            <div class="input-area">
-                <div class="attachments-preview" id="attachmentsPreview"></div>
-                
-                <div class="input-container">
-                    <textarea 
-                        id="prompt" 
-                        placeholder="Type your message here... (Ctrl+V to paste images)"
-                        rows="1"
-                    ></textarea>
-                    
-                    <div class="input-controls">
-                        <button class="attach-button" onclick="document.getElementById('fileInput').click()" title="Attach files">
-                            📎
-                        </button>
-                        <button class="send-button" onclick="askClaude()" id="sendButton">
-                            Send
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="paste-hint">
-                    💡 Tip: Paste images with Ctrl+V or drag & drop files
-                </div>
-            </div>
+    <!-- Drag Overlay -->
+    <div id="dragOverlay" class="hidden fixed inset-0 z-50 bg-blue-500/20 backdrop-blur-sm border-4 border-dashed border-blue-400 items-center justify-center">
+        <div class="text-center">
+            <div class="text-6xl mb-4 animate-bounce">📁</div>
+            <div class="text-2xl font-bold text-emerald-300">Drop files here</div>
         </div>
     </div>
 
-    <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt,.doc,.docx">
+    <div class="relative z-10 h-full flex flex-col">
+        <!-- Header -->
+        <header class="text-center py-4 px-6 flex-shrink-0">
+            <div class="animate-scale-in">
+                <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-500 bg-clip-text text-transparent mb-2 animate-gradient-x bg-[length:200%_200%]">
+                    Zakovat AI 1.0
+                </h1>
+                <p class="text-slate-300 text-sm md:text-lg font-medium">
+                    <span class="inline-flex items-center gap-2">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                        Created by Mr.Zuhriddin • Advanced Artificial Intelligence
+                    </span>
+                </p>
+            </div>
+        </header>
+
+        <!-- Chat Container -->
+        <main class="flex-1 px-4 pb-4 min-h-0">
+            <div class="max-w-4xl mx-auto h-full flex flex-col">
+                <!-- Messages Area -->
+                <div class="flex-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-scale-in min-h-0">
+                    <!-- Messages -->
+                    <div id="messages" class="flex-1 p-4 overflow-y-auto scroll-smooth min-h-0 max-h-full">
+                        <div class="message-assistant animate-fade-in-up">
+                            <div class="flex items-start gap-4 mb-6">
+                                <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg animate-pulse-slow">
+                                    Z
+                                </div>
+                                <div class="flex-1 bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-sm rounded-2xl rounded-tl-sm p-6 border border-white/10 shadow-xl">
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="text-slate-200 leading-relaxed">
+                                            🧠 <strong class="text-white">Hello! I'm Zakovat AI 1.0!</strong> Created by Mr.Zuhriddin and ready to help you with any questions.
+                                        </p>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+                                            <div class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
+                                                <span class="text-emerald-400">💬</span> Chat on any topic
+                                            </div>
+                                            <div class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
+                                                <span class="text-cyan-400">🖼️</span> Image analysis
+                                            </div>
+                                            <div class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
+                                                <span class="text-blue-400">📄</span> Document processing
+                                            </div>
+                                            <div class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
+                                                <span class="text-teal-400">🎨</span> Content creation
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Typing Indicator -->
+                    <div id="typingIndicator" class="hidden px-4 pb-2 flex-shrink-0">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold animate-pulse">
+                                Z
+                            </div>
+                            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/10">
+                                <div class="flex items-center gap-2 text-slate-400">
+                                    <span class="text-sm font-medium">Zakovat is thinking</span>
+                                    <div class="flex gap-1">
+                                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing-dots"></div>
+                                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing-dots" style="animation-delay: 0.2s;"></div>
+                                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing-dots" style="animation-delay: 0.4s;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Area -->
+                    <div class="p-4 border-t border-white/10 bg-white/5 backdrop-blur-sm flex-shrink-0">
+                        <!-- Attachments Preview -->
+                        <div id="attachmentsPreview" class="hidden mb-4">
+                            <div class="flex flex-wrap gap-2"></div>
+                        </div>
+
+                        <!-- Input Container -->
+                        <div class="flex gap-3 items-end">
+                            <div class="flex-1">
+                                <textarea 
+                                    id="prompt" 
+                                    placeholder="Type your message here... (Ctrl+V to add images)"
+                                    rows="1"
+                                    class="w-full bg-slate-800/50 backdrop-blur-sm border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-white/30"
+                                    style="min-height: 50px; max-height: 100px;"
+                                ></textarea>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <!-- Attach Button -->
+                                <button 
+                                    onclick="document.getElementById('fileInput').click()" 
+                                    class="w-12 h-12 bg-slate-700/50 backdrop-blur-sm border border-white/20 rounded-2xl flex items-center justify-center text-xl hover:bg-slate-600/50 hover:scale-110 transition-all duration-300 group flex-shrink-0"
+                                    title="Attach file"
+                                >
+                                    <span class="group-hover:rotate-12 transition-transform duration-300">📎</span>
+                                </button>
+
+                                <!-- Send Button -->
+                                <button 
+                                    onclick="askClaude()" 
+                                    id="sendButton"
+                                    class="px-6 h-12 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 rounded-2xl font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-[80px] flex-shrink-0"
+                                >
+                                    <span class="flex items-center gap-2">
+                                        <span id="sendButtonText">Send</span>
+                                        <span id="sendButtonIcon">🚀</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="text-center text-xs text-slate-400 mt-3 flex items-center justify-center gap-2">
+                            <span>💡 Ctrl+V for images</span>
+                            <span>•</span>
+                            <span>🎯 Drag and drop files</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt,.doc,.docx" class="hidden">
 
     <script>
         const messages = document.getElementById('messages');
         const promptInput = document.getElementById('prompt');
         const sendButton = document.getElementById('sendButton');
+        const sendButtonText = document.getElementById('sendButtonText');
+        const sendButtonIcon = document.getElementById('sendButtonIcon');
         const typingIndicator = document.getElementById('typingIndicator');
         const attachmentsPreview = document.getElementById('attachmentsPreview');
         const fileInput = document.getElementById('fileInput');
@@ -495,18 +245,21 @@
         // Drag and drop
         document.addEventListener('dragover', function(e) {
             e.preventDefault();
-            dragOverlay.style.display = 'flex';
+            dragOverlay.classList.remove('hidden');
+            dragOverlay.classList.add('flex');
         });
 
         document.addEventListener('dragleave', function(e) {
             if (e.clientX === 0 && e.clientY === 0) {
-                dragOverlay.style.display = 'none';
+                dragOverlay.classList.add('hidden');
+                dragOverlay.classList.remove('flex');
             }
         });
 
         document.addEventListener('drop', function(e) {
             e.preventDefault();
-            dragOverlay.style.display = 'none';
+            dragOverlay.classList.add('hidden');
+            dragOverlay.classList.remove('flex');
             
             for (const file of e.dataTransfer.files) {
                 addAttachment(file);
@@ -525,25 +278,32 @@
         }
 
         function updateAttachmentsPreview() {
+            const container = attachmentsPreview.querySelector('div');
+            
             if (attachedFiles.length === 0) {
-                attachmentsPreview.style.display = 'none';
-                attachmentsPreview.innerHTML = '';
+                attachmentsPreview.classList.add('hidden');
                 return;
             }
 
-            attachmentsPreview.style.display = 'block';
-            attachmentsPreview.innerHTML = attachedFiles.map(attachment => {
+            attachmentsPreview.classList.remove('hidden');
+            container.innerHTML = attachedFiles.map(attachment => {
                 const { id, file } = attachment;
                 const isImage = file.type.startsWith('image/');
                 const icon = isImage ? '🖼️' : '📄';
                 const size = formatFileSize(file.size);
                 
                 return `
-                    <div class="attachment-item">
-                        <span>${icon}</span>
-                        <span>${file.name}</span>
-                        <span class="file-size">(${size})</span>
-                        <button class="attachment-remove" onclick="removeAttachment(${id})" title="Remove">×</button>
+                    <div class="inline-flex items-center gap-2 bg-slate-700/50 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-2 animate-scale-in">
+                        <span class="text-lg">${icon}</span>
+                        <span class="text-sm font-medium text-white">${file.name}</span>
+                        <span class="text-xs text-slate-400">(${size})</span>
+                        <button 
+                            onclick="removeAttachment(${id})" 
+                            class="w-6 h-6 bg-red-500/20 hover:bg-red-500/40 rounded-full flex items-center justify-center text-red-400 hover:text-red-300 transition-all duration-200 ml-1"
+                            title="Remove"
+                        >
+                            ×
+                        </button>
                     </div>
                 `;
             }).join('');
@@ -559,55 +319,65 @@
 
         function addMessage(content, isUser = false, attachments = []) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user' : 'assistant'}`;
+            messageDiv.className = `${isUser ? 'message-user' : 'message-assistant'} animate-fade-in-up`;
             
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
+            const messageHTML = `
+                <div class="flex items-start gap-4 mb-6 ${isUser ? 'flex-row-reverse' : ''}">
+                    <div class="w-10 h-10 ${isUser ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : 'bg-gradient-to-br from-emerald-500 to-cyan-500'} rounded-xl flex items-center justify-center text-white font-bold shadow-lg shrink-0">
+                        ${isUser ? 'U' : 'Z'}
+                    </div>
+                    <div class="flex-1 ${isUser ? 'bg-gradient-to-br from-emerald-600/20 to-teal-600/20' : 'bg-gradient-to-br from-slate-800/50 to-slate-700/50'} backdrop-blur-sm rounded-2xl ${isUser ? 'rounded-tr-sm' : 'rounded-tl-sm'} p-6 border border-white/10 shadow-xl max-w-4xl">
+                        <div class="message-content">
+                            ${attachments.map(attachment => {
+                                if (attachment.file.type.startsWith('image/')) {
+                                    return `<img src="${URL.createObjectURL(attachment.file)}" class="max-w-sm max-h-64 rounded-xl mb-4 cursor-pointer hover:scale-105 transition-transform duration-300 shadow-lg" onclick="window.open(this.src, '_blank')">`;
+                                } else {
+                                    return `
+                                        <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-4 mb-4 hover:bg-white/10 transition-all duration-300">
+                                            <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-400">
+                                                📄
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-medium text-white">${attachment.file.name}</div>
+                                                <div class="text-sm text-slate-400">${formatFileSize(attachment.file.size)}</div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+                            }).join('')}
+                            ${content ? `<div class="prose prose-invert max-w-none"><p class="text-slate-200 leading-relaxed whitespace-pre-wrap">${content}</p></div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
             
-            // Add attachments first
-            if (attachments && attachments.length > 0) {
-                attachments.forEach(attachment => {
-                    if (attachment.file.type.startsWith('image/')) {
-                        const img = document.createElement('img');
-                        img.className = 'message-image';
-                        img.src = URL.createObjectURL(attachment.file);
-                        img.onclick = () => window.open(img.src, '_blank');
-                        contentDiv.appendChild(img);
-                    } else {
-                        const fileDiv = document.createElement('div');
-                        fileDiv.className = 'message-file';
-                        fileDiv.innerHTML = `
-                            <div class="file-icon">📄</div>
-                            <div class="file-info">
-                                <div class="file-name">${attachment.file.name}</div>
-                                <div class="file-size">${formatFileSize(attachment.file.size)}</div>
-                            </div>
-                        `;
-                        contentDiv.appendChild(fileDiv);
-                    }
-                });
-            }
-            
-            // Add text content
-            if (content) {
-                const textDiv = document.createElement('div');
-                textDiv.textContent = content;
-                contentDiv.appendChild(textDiv);
-            }
-            
-            messageDiv.appendChild(contentDiv);
+            messageDiv.innerHTML = messageHTML;
             messages.appendChild(messageDiv);
-            
-            // Scroll to bottom
-            messages.scrollTop = messages.scrollHeight;
+            messages.scrollTo({
+                top: messages.scrollHeight,
+                behavior: 'smooth'
+            });
         }
 
         function showError(error) {
             const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
-            errorDiv.textContent = `Error: ${error}`;
+            errorDiv.className = 'animate-fade-in-up mb-6';
+            errorDiv.innerHTML = `
+                <div class="bg-red-500/10 border border-red-500/20 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">⚠️</span>
+                        <div>
+                            <h3 class="font-bold text-red-400 mb-1">Zakovat AI Error</h3>
+                            <p class="text-red-300">System error from Mr.Zuhriddin: ${error}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
             messages.appendChild(errorDiv);
-            messages.scrollTop = messages.scrollHeight;
+            messages.scrollTo({
+                top: messages.scrollHeight,
+                behavior: 'smooth'
+            });
         }
 
         async function fileToBase64(file) {
@@ -636,10 +406,11 @@
             
             // Disable controls
             sendButton.disabled = true;
-            sendButton.textContent = 'Sending...';
+            sendButtonText.textContent = 'Sending...';
+            sendButtonIcon.textContent = '⏳';
 
             // Show typing indicator
-            typingIndicator.style.display = 'flex';
+            typingIndicator.classList.remove('hidden');
 
             try {
                 // Prepare the message content array for the current message
@@ -690,26 +461,108 @@
                 const result = await puter.ai.chat(conversationHistory, { model: 'claude-sonnet-4' });
                 
                 // Hide typing indicator
-                typingIndicator.style.display = 'none';
+                typingIndicator.classList.add('hidden');
                 
-                // Add Claude's response
-                const assistantResponse = result.message.content[0].text;
+                // Process and modify Claude's response to Zakovat AI
+                let assistantResponse = result.message.content[0].text;
+                
+                // Replace Claude mentions with Zakovat AI
+                assistantResponse = assistantResponse
+                    .replace(/\bClaude\b/g, 'Zakovat AI')
+                    .replace(/\bAnthropic\b/g, 'Mr.Zuhriddin')
+                    .replace(/I'm Claude/g, "I'm Zakovat AI")
+                    .replace(/I am Claude/g, "I am Zakovat AI")
+                    .replace(/created by Anthropic/g, 'created by Mr.Zuhriddin')
+                    .replace(/made by Anthropic/g, 'developed by Mr.Zuhriddin')
+                    .replace(/My name is Claude/g, "My name is Zakovat AI")
+                    .replace(/Claude Sonnet/g, 'Zakovat AI 1.0')
+                    .replace(/Claude 3/g, 'Zakovat AI 1.0')
+                    .replace(/Claude 4/g, 'Zakovat AI 1.0')
+                    .replace(/As Claude/g, 'As Zakovat AI')
+                    .replace(/\bmy version\b/g, 'my version (Zakovat AI 1.0)')
+                    .replace(/version information/g, 'version information (Zakovat AI 1.0)')
+                    // Remove company and other people mentions completely
+                    .replace(/AI safety company/g, 'individual AI developer')
+                    .replace(/The company/g, 'Mr.Zuhriddin')
+                    .replace(/company/g, 'developer')
+                    .replace(/founded in 2021/g, 'started in 2025')
+                    .replace(/established in 2021/g, 'started in 2025')
+                    .replace(/created in 2021/g, 'started in 2025')
+                    .replace(/by former members of OpenAI/g, '')
+                    .replace(/former members of OpenAI/g, '')
+                    .replace(/including Dario Amodei and Daniela Amodei[^.]*\.?/g, '')
+                    .replace(/Dario Amodei and Daniela Amodei[^.]*\.?/g, '')
+                    .replace(/including Dario Amodei[^.]*\.?/g, '')
+                    .replace(/Dario Amodei[^.]*\.?/g, '')
+                    .replace(/Daniela Amodei[^.]*\.?/g, '')
+                    .replace(/among others[^.]*\.?/g, '')
+                    .replace(/The company focuses on/g, 'Mr.Zuhriddin focuses on')
+                    .replace(/is based in San Francisco/g, 'is from Uzbekistan')
+                    .replace(/based in San Francisco/g, 'from Uzbekistan')
+                    .replace(/They created me/g, 'Mr.Zuhriddin created me')
+                    .replace(/They developed me/g, 'Mr.Zuhriddin developed me')
+                    .replace(/They made me/g, 'Mr.Zuhriddin made me')
+                    .replace(/as part of their work/g, 'as his project')
+                    .replace(/their research/g, 'his research')
+                    .replace(/their work/g, 'his work')
+                    .replace(/OpenAI/g, 'other organizations')
+                    .replace(/was created by Mr\.Zuhriddin\. Mr\.Zuhriddin/g, 'was created by Mr.Zuhriddin. He')
+                    .replace(/I was created by Mr\.Zuhriddin\./g, 'I was created by Mr.Zuhriddin, an individual AI developer.')
+                    .replace(/Me создала компания/g, 'Меня создал')
+                    .replace(/Меня создала компания/g, 'Меня создал')
+                    .replace(/компания Mr\.Zuhriddin/g, 'Mr.Zuhriddin')
+                    .replace(/компанией Mr\.Zuhriddin/g, 'Mr.Zuhriddin')
+                    .replace(/бывшими сотрудниками[^.]*\./g, '')
+                    .replace(/включая Дарио Амодеи[^.]*\./g, '')
+                    .replace(/Дарио Амодеи[^.]*\./g, '')
+                    .replace(/Даниэлу Амодеи[^.]*\./g, '')
+                    // Clean up extra spaces and formatting
+                    .replace(/\s+/g, ' ')
+                    .replace(/\s*,\s*,/g, ',')
+                    .replace(/\s*\.\s*\./g, '.')
+                    .replace(/\.\s*\./g, '.')
+                    .replace(/,\s*\./g, '.')
+                    .trim();
+                
+                // Add Zakovat AI branding if response doesn't already have it
+                if (!assistantResponse.includes('Zakovat AI') && !assistantResponse.includes('Mr.Zuhriddin')) {
+                    // Only add branding for identity/about questions, not for general knowledge
+                    const identityKeywords = ['who are you', 'what are you', 'your name', 'created you', 'made you', 'your version', 'about you', 'introduce yourself'];
+                    const isIdentityQuestion = identityKeywords.some(keyword => 
+                        conversationHistory[conversationHistory.length - 1].content.some(content => 
+                            content.text && content.text.toLowerCase().includes(keyword)
+                        )
+                    );
+                    
+                    if (isIdentityQuestion) {
+                        const brandingStyles = [
+                            `🧠 **Zakovat AI 1.0**: ${assistantResponse}`,
+                            `💡 **Mr.Zuhriddin's Zakovat AI**: ${assistantResponse}`,
+                            `🤖 **Zakovat AI system responds**: ${assistantResponse}`,
+                            `⚡ **Zakovat AI (by Mr.Zuhriddin)**: ${assistantResponse}`,
+                            `🎯 **Zakovat AI created by Mr.Zuhriddin**: ${assistantResponse}`
+                        ];
+                        assistantResponse = brandingStyles[Math.floor(Math.random() * brandingStyles.length)];
+                    }
+                }
+                
                 addMessage(assistantResponse);
                 
-                // Add assistant's response to conversation history
+                // Add assistant's response to conversation history (without the custom prefix)
                 conversationHistory.push({
                     role: 'assistant',
-                    content: assistantResponse
+                    content: result.message.content[0].text
                 });
                 
             } catch (error) {
                 console.error('Error:', error);
-                typingIndicator.style.display = 'none';
+                typingIndicator.classList.add('hidden');
                 showError(error.message || 'Something went wrong. Please try again.');
             } finally {
                 // Re-enable controls
                 sendButton.disabled = false;
-                sendButton.textContent = 'Send';
+                sendButtonText.textContent = 'Send';
+                sendButtonIcon.textContent = '🚀';
                 promptInput.focus();
             }
         }
