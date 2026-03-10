@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,15 +50,20 @@
         }
     </script>
 </head>
+
 <body class="h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden">
     <div class="fixed inset-0 z-0">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/30 to-pink-900/20 animate-gradient-x bg-[length:400%_400%]"></div>
+        <div
+            class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/30 to-pink-900/20 animate-gradient-x bg-[length:400%_400%]">
+        </div>
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-float"></div>
-        <div class="absolute top-3/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float" style="animation-delay: -3s;"></div>
+        <div class="absolute top-3/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float"
+            style="animation-delay: -3s;"></div>
         <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
     </div>
 
-    <div id="dragOverlay" class="hidden fixed inset-0 z-50 bg-blue-500/20 backdrop-blur-sm border-4 border-dashed border-blue-400 items-center justify-center">
+    <div id="dragOverlay"
+        class="hidden fixed inset-0 z-50 bg-blue-500/20 backdrop-blur-sm border-4 border-dashed border-blue-400 items-center justify-center">
         <div class="text-center">
             <div class="text-6xl mb-4 animate-bounce">📁</div>
             <div class="text-2xl font-bold text-emerald-300">Drop files here</div>
@@ -67,7 +73,8 @@
     <div class="relative z-10 h-full flex flex-col">
         <header class="text-center py-4 px-6 flex-shrink-0">
             <div class="animate-scale-in">
-                <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-500 bg-clip-text text-transparent mb-2 animate-gradient-x bg-[length:200%_200%]">
+                <h1
+                    class="text-4xl md:text-5xl font-black bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-500 bg-clip-text text-transparent mb-2 animate-gradient-x bg-[length:200%_200%]">
                     Zakovat AI 1.0
                 </h1>
                 <p class="text-slate-300 text-sm md:text-lg font-medium">
@@ -81,29 +88,37 @@
 
         <main class="flex-1 px-4 pb-4 min-h-0">
             <div class="max-w-4xl mx-auto h-full flex flex-col">
-                <div class="flex-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-scale-in min-h-0">
+                <div
+                    class="flex-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-scale-in min-h-0">
                     <div id="messages" class="flex-1 p-4 overflow-y-auto scroll-smooth min-h-0 max-h-full">
                         <div class="message-assistant animate-fade-in-up">
                             <div class="flex items-start gap-4 mb-6">
-                                <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg animate-pulse-slow">
+                                <div
+                                    class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg animate-pulse-slow">
                                     Z
                                 </div>
-                                <div class="flex-1 bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-sm rounded-2xl rounded-tl-sm p-6 border border-white/10 shadow-xl">
+                                <div
+                                    class="flex-1 bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-sm rounded-2xl rounded-tl-sm p-6 border border-white/10 shadow-xl">
                                     <div class="prose prose-invert max-w-none">
                                         <p class="text-slate-200 leading-relaxed">
-                                            🧠 <strong class="text-white">Hello! I'm Zakovat AI 1.0!</strong> Created by Mr.Zuhriddin and ready to help you with any questions.
+                                            🧠 <strong class="text-white">Hello! I'm Zakovat AI 1.0!</strong> Created by
+                                            Mr.Zuhriddin and ready to help you with any questions.
                                         </p>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-                                            <div class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
+                                            <div
+                                                class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
                                                 <span class="text-emerald-400">💬</span> Chat on any topic
                                             </div>
-                                            <div class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
+                                            <div
+                                                class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
                                                 <span class="text-cyan-400">🖼️</span> Image analysis
                                             </div>
-                                            <div class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
+                                            <div
+                                                class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
                                                 <span class="text-blue-400">📄</span> Document processing
                                             </div>
-                                            <div class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
+                                            <div
+                                                class="flex items-center gap-3 text-sm text-slate-300 bg-white/5 rounded-xl p-3 border border-white/5">
                                                 <span class="text-teal-400">🎨</span> Content creation
                                             </div>
                                         </div>
@@ -115,7 +130,8 @@
 
                     <div id="typingIndicator" class="hidden px-4 pb-2 flex-shrink-0">
                         <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold animate-pulse">
+                            <div
+                                class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold animate-pulse">
                                 Z
                             </div>
                             <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/10">
@@ -123,8 +139,10 @@
                                     <span class="text-sm font-medium">Zakovat is thinking</span>
                                     <div class="flex gap-1">
                                         <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing-dots"></div>
-                                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing-dots" style="animation-delay: 0.2s;"></div>
-                                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing-dots" style="animation-delay: 0.4s;"></div>
+                                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing-dots"
+                                            style="animation-delay: 0.2s;"></div>
+                                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing-dots"
+                                            style="animation-delay: 0.4s;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -138,29 +156,21 @@
 
                         <div class="flex gap-3 items-end">
                             <div class="flex-1">
-                                <textarea 
-                                    id="prompt" 
-                                    placeholder="Type your message here... (Ctrl+V to add images)"
+                                <textarea id="prompt" placeholder="Type your message here... (Ctrl+V to add images)"
                                     rows="1"
                                     class="w-full bg-slate-800/50 backdrop-blur-sm border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-white/30"
-                                    style="min-height: 50px; max-height: 100px;"
-                                ></textarea>
+                                    style="min-height: 50px; max-height: 100px;"></textarea>
                             </div>
-                            
+
                             <div class="flex gap-2">
-                                <button 
-                                    onclick="document.getElementById('fileInput').click()" 
+                                <button onclick="document.getElementById('fileInput').click()"
                                     class="w-12 h-12 bg-slate-700/50 backdrop-blur-sm border border-white/20 rounded-2xl flex items-center justify-center text-xl hover:bg-slate-600/50 hover:scale-110 transition-all duration-300 group flex-shrink-0"
-                                    title="Attach file"
-                                >
+                                    title="Attach file">
                                     <span class="group-hover:rotate-12 transition-transform duration-300">📎</span>
                                 </button>
 
-                                <button 
-                                    onclick="askClaude()" 
-                                    id="sendButton"
-                                    class="px-6 h-12 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 rounded-2xl font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-[80px] flex-shrink-0"
-                                >
+                                <button onclick="askClaude()" id="sendButton"
+                                    class="px-6 h-12 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 rounded-2xl font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-[80px] flex-shrink-0">
                                     <span class="flex items-center gap-2">
                                         <span id="sendButtonText">Send</span>
                                         <span id="sendButtonIcon">🚀</span>
@@ -196,19 +206,19 @@
         let attachedFiles = [];
         let conversationHistory = [];
 
-        promptInput.addEventListener('input', function() {
+        promptInput.addEventListener('input', function () {
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 120) + 'px';
         });
 
-        promptInput.addEventListener('keydown', function(e) {
+        promptInput.addEventListener('keydown', function (e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 askClaude();
             }
         });
 
-        promptInput.addEventListener('paste', function(e) {
+        promptInput.addEventListener('paste', function (e) {
             const items = e.clipboardData.items;
             for (let i = 0; i < items.length; i++) {
                 const item = items[i];
@@ -219,31 +229,31 @@
             }
         });
 
-        fileInput.addEventListener('change', function(e) {
+        fileInput.addEventListener('change', function (e) {
             for (const file of e.target.files) {
                 addAttachment(file);
             }
             e.target.value = '';
         });
 
-        document.addEventListener('dragover', function(e) {
+        document.addEventListener('dragover', function (e) {
             e.preventDefault();
             dragOverlay.classList.remove('hidden');
             dragOverlay.classList.add('flex');
         });
 
-        document.addEventListener('dragleave', function(e) {
+        document.addEventListener('dragleave', function (e) {
             if (e.clientX === 0 && e.clientY === 0) {
                 dragOverlay.classList.add('hidden');
                 dragOverlay.classList.remove('flex');
             }
         });
 
-        document.addEventListener('drop', function(e) {
+        document.addEventListener('drop', function (e) {
             e.preventDefault();
             dragOverlay.classList.add('hidden');
             dragOverlay.classList.remove('flex');
-            
+
             for (const file of e.dataTransfer.files) {
                 addAttachment(file);
             }
@@ -262,7 +272,7 @@
 
         function updateAttachmentsPreview() {
             const container = attachmentsPreview.querySelector('div');
-            
+
             if (attachedFiles.length === 0) {
                 attachmentsPreview.classList.add('hidden');
                 return;
@@ -274,7 +284,7 @@
                 const isImage = file.type.startsWith('image/');
                 const icon = isImage ? '🖼️' : '📄';
                 const size = formatFileSize(file.size);
-                
+
                 return `
                     <div class="inline-flex items-center gap-2 bg-slate-700/50 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-2 animate-scale-in">
                         <span class="text-lg">${icon}</span>
@@ -303,7 +313,7 @@
         function addMessage(content, isUser = false, attachments = []) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `${isUser ? 'message-user' : 'message-assistant'} animate-fade-in-up`;
-            
+
             const messageHTML = `
                 <div class="flex items-start gap-4 mb-6 ${isUser ? 'flex-row-reverse' : ''}">
                     <div class="w-10 h-10 ${isUser ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : 'bg-gradient-to-br from-emerald-500 to-cyan-500'} rounded-xl flex items-center justify-center text-white font-bold shadow-lg shrink-0">
@@ -312,10 +322,10 @@
                     <div class="flex-1 ${isUser ? 'bg-gradient-to-br from-emerald-600/20 to-teal-600/20' : 'bg-gradient-to-br from-slate-800/50 to-slate-700/50'} backdrop-blur-sm rounded-2xl ${isUser ? 'rounded-tr-sm' : 'rounded-tl-sm'} p-6 border border-white/10 shadow-xl max-w-4xl">
                         <div class="message-content">
                             ${attachments.map(attachment => {
-                                if (attachment.file.type.startsWith('image/')) {
-                                    return `<img src="${URL.createObjectURL(attachment.file)}" class="max-w-sm max-h-64 rounded-xl mb-4 cursor-pointer hover:scale-105 transition-transform duration-300 shadow-lg" onclick="window.open(this.src, '_blank')">`;
-                                } else {
-                                    return `
+                if (attachment.file.type.startsWith('image/')) {
+                    return `<img src="${URL.createObjectURL(attachment.file)}" class="max-w-sm max-h-64 rounded-xl mb-4 cursor-pointer hover:scale-105 transition-transform duration-300 shadow-lg" onclick="window.open(this.src, '_blank')">`;
+                } else {
+                    return `
                                         <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-4 mb-4 hover:bg-white/10 transition-all duration-300">
                                             <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-400">
                                                 📄
@@ -326,14 +336,14 @@
                                             </div>
                                         </div>
                                     `;
-                                }
-                            }).join('')}
+                }
+            }).join('')}
                             ${content ? `<div class="prose prose-invert max-w-none"><p class="text-slate-200 leading-relaxed whitespace-pre-wrap">${content}</p></div>` : ''}
                         </div>
                     </div>
                 </div>
             `;
-            
+
             messageDiv.innerHTML = messageHTML;
             messages.appendChild(messageDiv);
             messages.scrollTo({
@@ -375,7 +385,7 @@
         async function askClaude() {
             const prompt = promptInput.value.trim();
             const attachments = [...attachedFiles];
-            
+
             if (!prompt && attachments.length === 0) return;
 
             addMessage(prompt, true, attachments);
@@ -384,7 +394,7 @@
             promptInput.style.height = 'auto';
             attachedFiles = [];
             updateAttachmentsPreview();
-            
+
             sendButton.disabled = true;
             sendButtonText.textContent = 'Sending...';
             sendButtonIcon.textContent = '⏳';
@@ -393,14 +403,14 @@
 
             try {
                 const messageContent = [];
-                
+
                 if (prompt) {
                     messageContent.push({
                         type: 'text',
                         text: prompt
                     });
                 }
-                
+
                 for (const attachment of attachments) {
                     if (attachment.file.type.startsWith('image/')) {
                         const base64 = await fileToBase64(attachment.file);
@@ -428,15 +438,15 @@
                     role: 'user',
                     content: messageContent
                 };
-                
+
                 conversationHistory.push(userMessage);
 
                 const result = await puter.ai.chat(conversationHistory, { model: 'claude-sonnet-4' });
-                
+
                 typingIndicator.classList.add('hidden');
-                
+
                 let assistantResponse = result.message.content[0].text;
-                
+
                 assistantResponse = assistantResponse
                     .replace(/\bClaude\b/g, 'Zakovat AI')
                     .replace(/\bAnthropic\b/g, 'Mr.Zuhriddin')
@@ -491,15 +501,15 @@
                     .replace(/\.\s*\./g, '.')
                     .replace(/,\s*\./g, '.')
                     .trim();
-                
+
                 if (!assistantResponse.includes('Zakovat AI') && !assistantResponse.includes('Mr.Zuhriddin')) {
                     const identityKeywords = ['who are you', 'what are you', 'your name', 'created you', 'made you', 'your version', 'about you', 'introduce yourself'];
-                    const isIdentityQuestion = identityKeywords.some(keyword => 
-                        conversationHistory[conversationHistory.length - 1].content.some(content => 
+                    const isIdentityQuestion = identityKeywords.some(keyword =>
+                        conversationHistory[conversationHistory.length - 1].content.some(content =>
                             content.text && content.text.toLowerCase().includes(keyword)
                         )
                     );
-                    
+
                     if (isIdentityQuestion) {
                         const brandingStyles = [
                             `🧠 **Zakovat AI 1.0**: ${assistantResponse}`,
@@ -511,14 +521,14 @@
                         assistantResponse = brandingStyles[Math.floor(Math.random() * brandingStyles.length)];
                     }
                 }
-                
+
                 addMessage(assistantResponse);
-                
+
                 conversationHistory.push({
                     role: 'assistant',
                     content: result.message.content[0].text
                 });
-                
+
             } catch (error) {
                 console.error('Error:', error);
                 typingIndicator.classList.add('hidden');
@@ -536,4 +546,5 @@
         });
     </script>
 </body>
+
 </html>
