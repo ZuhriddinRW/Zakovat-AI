@@ -4,13 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zakovat AI 1.0 Chat</title>
+    <meta name="description" content="Zakovat AI - Advanced Artificial Intelligence Assistant created by Mr.Zuhriddin. Chat, analyze images, process documents, and create content.">
+    <meta name="keywords" content="AI, Artificial Intelligence, Chat, Image Analysis, Document Processing, Content Creation">
+    <meta name="author" content="Mr.Zuhriddin">
+    <title>Zakovat AI - Advanced AI Assistant</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3EZ%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.puter.com/v2/"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -18,6 +28,7 @@
                         'fade-in-up': 'fade-in-up 0.5s ease-out',
                         'scale-in': 'scale-in 0.3s ease-out',
                         'typing-dots': 'typing-dots 1.4s ease-in-out infinite both',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
                     },
                     keyframes: {
                         float: {
@@ -39,11 +50,19 @@
                         'typing-dots': {
                             '0%, 80%, 100%': { transform: 'scale(0)', opacity: '0.5' },
                             '40%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)' },
+                            '100%': { boxShadow: '0 0 30px rgba(59, 130, 246, 0.8)' },
                         }
                     },
                     backgroundImage: {
                         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                        'mesh-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)',
+                        'mesh-gradient': 'linear-gradient(135deg, #1e293b 0%, #0f172a 25%, #1e40af 50%, #1e293b 75%, #0f172a 100%)',
+                    },
+                    boxShadow: {
+                        'glow-blue': '0 0 20px rgba(59, 130, 246, 0.3)',
+                        'glow-emerald': '0 0 20px rgba(16, 185, 129, 0.3)',
                     }
                 }
             }
@@ -71,17 +90,27 @@
     </div>
 
     <div class="relative z-10 h-full flex flex-col">
-        <header class="text-center py-4 px-6 flex-shrink-0">
+        <header class="text-center py-6 px-6 flex-shrink-0">
             <div class="animate-scale-in">
-                <h1
-                    class="text-4xl md:text-5xl font-black bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-500 bg-clip-text text-transparent mb-2 animate-gradient-x bg-[length:200%_200%]">
-                    Zakovat AI 1.0
-                </h1>
-                <p class="text-slate-300 text-sm md:text-lg font-medium">
-                    <span class="inline-flex items-center gap-2">
-                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                        Created by Mr.Zuhriddin • Advanced Artificial Intelligence
-                    </span>
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-glow-emerald animate-pulse-slow">
+                        Z
+                    </div>
+                    <div>
+                        <h1 class="text-5xl md:text-6xl font-black bg-gradient-to-r from-emerald-400 via-cyan-500 to-blue-500 bg-clip-text text-transparent mb-2 animate-gradient-x bg-[length:200%_200%]">
+                            Zakovat AI
+                        </h1>
+                        <div class="flex items-center justify-center gap-2 text-slate-300 text-sm md:text-base font-medium">
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                            Advanced Artificial Intelligence
+                            <span class="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" style="animation-delay: 0.5s;"></span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-slate-400 text-sm md:text-base font-medium max-w-2xl mx-auto">
+                    Created by <span class="text-emerald-400 font-semibold">Mr.Zuhriddin</span> •
+                    <span class="text-cyan-400">Intelligent Conversations</span> •
+                    <span class="text-blue-400">Advanced Analysis</span>
                 </p>
             </div>
         </header>
@@ -156,21 +185,21 @@
 
                         <div class="flex gap-3 items-end">
                             <div class="flex-1">
-                                <textarea id="prompt" placeholder="Type your message here... (Ctrl+V to add images)"
+                                <textarea id="prompt" placeholder="Ask Zakovat AI anything... (Ctrl+V to add images)"
                                     rows="1"
-                                    class="w-full bg-slate-800/50 backdrop-blur-sm border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-white/30"
-                                    style="min-height: 50px; max-height: 100px;"></textarea>
+                                    class="w-full bg-slate-800/60 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-4 text-white placeholder-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 hover:border-white/30 hover:bg-slate-800/70 font-medium"
+                                    style="min-height: 56px; max-height: 120px;"></textarea>
                             </div>
 
-                            <div class="flex gap-2">
+                            <div class="flex gap-3">
                                 <button onclick="document.getElementById('fileInput').click()"
-                                    class="w-12 h-12 bg-slate-700/50 backdrop-blur-sm border border-white/20 rounded-2xl flex items-center justify-center text-xl hover:bg-slate-600/50 hover:scale-110 transition-all duration-300 group flex-shrink-0"
+                                    class="w-14 h-14 bg-slate-700/60 backdrop-blur-md border border-white/20 rounded-2xl flex items-center justify-center text-xl hover:bg-slate-600/70 hover:scale-110 hover:shadow-glow-blue transition-all duration-300 group flex-shrink-0"
                                     title="Attach file">
                                     <span class="group-hover:rotate-12 transition-transform duration-300">📎</span>
                                 </button>
 
                                 <button onclick="askClaude()" id="sendButton"
-                                    class="px-6 h-12 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 rounded-2xl font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-[80px] flex-shrink-0">
+                                    class="px-8 h-14 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 rounded-2xl font-bold text-white shadow-glow-emerald hover:shadow-glow-emerald hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-[100px] flex-shrink-0">
                                     <span class="flex items-center gap-2">
                                         <span id="sendButtonText">Send</span>
                                         <span id="sendButtonIcon">🚀</span>
